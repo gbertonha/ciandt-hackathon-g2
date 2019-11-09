@@ -23,6 +23,26 @@ function readData(sensor) {
 }
 
 /**
+ * Reads data from Firestore and updates information
+ * displayed on the dashboard
+ * @param {String} sensor The sensor key.
+ */
+function writeData(sensor) {
+    var db = firebase.firestore();
+    db.collection(sensor)
+        .onSnapshot(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                document.getElementById(sensor).innerText = doc.data().value;
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                var dateTime = date + ' ' + time;
+                document.getElementById("last-update").innerText = dateTime;
+            });
+        });
+}
+
+/**
  * write from Firestore
  * displayed on the dashboard
  * @param {String} sensor The sensor key.
@@ -75,13 +95,13 @@ function checkQuality(sensor) {
 					MaxHum = doc.data().maxHum;
 					MinHum = doc.data().minHum;
 	            }
-			
+				checkCondtions(sensor);
             });
         });
     
 
 }
-function checkQuality(sensor) {
+function checkCondtions(sensor) {
 	if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
 		if (tem>MaxTem) {
 			htmlUpdate(sensor + "_temp","Bad!");
