@@ -2,12 +2,6 @@
 /*jslint browser:true */
 "use strict";
 
-var tem;
-var hum;
-var MaxTem; 
-var MinTem;
-var MaxHum; 
-var MinHum;
 /**
  * Reads data from Firestore and updates information
  * displayed on the dashboard
@@ -34,8 +28,7 @@ function readData(sensor) {
  * @param {String} sensor The sensor key.
  */
 function htmlUpdate(id, message) {
-			
-            document.getElementById(id).innerText = message;
+	document.getElementById(id).innerText = message;
 }
 
 
@@ -47,6 +40,12 @@ function htmlUpdate(id, message) {
  */
 function checkQuality(sensor) {
     var db = firebase.firestore();
+	var tem;
+	var hum;
+	var MaxTem; 
+	var MinTem;
+	var MaxHum; 
+	var MinHum;
 	
 	db.collection("temperature")
         .onSnapshot(function (querySnapshot) {
@@ -65,40 +64,42 @@ function checkQuality(sensor) {
     db.collection(sensor)
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-		    if (sensor=="people") {
-			MaxTem = doc.data().maxTemp;
-			MinTem = doc.data().minTemp;
-			MaxHum = doc.data().maxHum;
-			MinHum = doc.data().minHum;
-		    } else if (sensor=="computer") {
-			MaxTem = doc.data().maxTemp;
-			MinTem = doc.data().minTemp;
-			MaxHum = doc.data().maxHum;
-			MinHum = doc.data().minHum;
+				if (sensor=="people") {
+					MaxTem = doc.data().maxTemp;
+					MinTem = doc.data().minTemp;
+					MaxHum = doc.data().maxHum;
+					MinHum = doc.data().minHum;
+				} else if (sensor=="computer") {
+					MaxTem = doc.data().maxTemp;
+					MinTem = doc.data().minTemp;
+					MaxHum = doc.data().maxHum;
+					MinHum = doc.data().minHum;
 	            }
-			if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-				if (tem>MaxTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else if (tem<MinTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else {
-					htmlUpdate(sensor + "_temp","Good!");
-				}
-				if (hum>MaxHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else if (hum<MinHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else {
-					htmlUpdate(sensor + "_hum","Good!");
-				}
-		    
-			}
+			
             });
         });
     
 
 }
-
+function checkQuality(sensor) {
+	if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
+		if (tem>MaxTem) {
+			htmlUpdate(sensor + "_temp","Bad!");
+		} else if (tem<MinTem) {
+			htmlUpdate(sensor + "_temp","Bad!");
+		} else {
+			htmlUpdate(sensor + "_temp","Good!");
+		}
+		if (hum>MaxHum) {
+			htmlUpdate(sensor + "_hum","Bad!");
+		} else if (hum<MinHum) {
+			htmlUpdate(sensor + "_hum","Bad!");
+		} else {
+			htmlUpdate(sensor + "_hum","Good!");
+		}
+	
+	}
+}
 
 
 /**
