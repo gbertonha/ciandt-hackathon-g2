@@ -1,7 +1,12 @@
 /*global firebase, document */
 /*jslint browser:true */
 "use strict";
-
+var tem;
+var hum;
+var MaxTem; 
+var MinTem;
+var MaxHum; 
+var MinHum;
 /**
  * Reads data from Firestore and updates information
  * displayed on the dashboard
@@ -60,12 +65,6 @@ function htmlUpdate(id, message) {
  */
 function checkQuality(sensor) {
     var db = firebase.firestore();
-	var tem;
-	var hum;
-	var MaxTem; 
-	var MinTem;
-	var MaxHum; 
-	var MinHum;
 	
 	db.collection("temperature")
         .onSnapshot(function (querySnapshot) {
@@ -95,16 +94,15 @@ function checkQuality(sensor) {
 					MaxHum = doc.data().maxHum;
 					MinHum = doc.data().minHum;
 	            }
-				if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-					checkCondtions(sensor,tem, hum, MaxTem, MinTem, MaxHum, MinHum);
-				}
+				checkCondtions(sensor);
             });
         });
     
 
 }
-function checkCondtions(sensor,tem, hum, MaxTem, MinTem, MaxHum, MinHum) {
-	if (tem>MaxTem) {
+function checkCondtions(sensor) {
+	if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
+		if (tem>MaxTem) {
 			htmlUpdate(sensor + "_temp","Bad!");
 		} else if (tem<MinTem) {
 			htmlUpdate(sensor + "_temp","Bad!");
@@ -118,6 +116,8 @@ function checkCondtions(sensor,tem, hum, MaxTem, MinTem, MaxHum, MinHum) {
 		} else {
 			htmlUpdate(sensor + "_hum","Good!");
 		}
+	
+	}
 }
 
 
