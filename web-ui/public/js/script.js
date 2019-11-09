@@ -37,27 +37,27 @@ function readData(sensor) {
  * displayed on the dashboard
  * @param {String} sensor The sensor key.
  */
-function htmlUpdate(id, message) {
-			
+function htmlUpdate(id, message, color) {			
             document.getElementById(id).innerText = message;
+			document.getElementById(id).style.color = color
 }
 
 
 function conditions(vsensor,vtem,vhum,Maxvtem,Minvtem,Maxvhum,Minvhum) {
 	if (vtem!=null && vhum!=null && Maxvtem!=null && Minvtem!=null && Maxvhum!=null && Minvhum!=null) {
 		if (vtem>Maxvtem) {
-			htmlUpdate(vsensor + "_temp","Bad!");
+			htmlUpdate(vsensor + "_temp","Bad!", "red");
 		} else if (vtem<Minvtem) {
-			htmlUpdate(vsensor + "_temp","Bad!");
+			htmlUpdate(vsensor + "_temp","Bad!", "red");
 		} else {
-			htmlUpdate(vsensor + "_temp","Good!");
+			htmlUpdate(vsensor + "_temp","Good!", "green");
 		}
 		if (vhum>Maxvhum) {
-			htmlUpdate(vsensor + "_hum","Bad!");
+			htmlUpdate(vsensor + "_hum","Bad!", "red");
 		} else if (vhum<Minvhum) {
-			htmlUpdate(vsensor + "_hum","Bad!");
+			htmlUpdate(vsensor + "_hum","Bad!", "red");
 		} else {
-			htmlUpdate(vsensor + "_hum","Good!");
+			htmlUpdate(vsensor + "_hum","Good!", "green");
 		}
 
 	}
