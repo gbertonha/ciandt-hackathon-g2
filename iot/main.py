@@ -5,6 +5,8 @@ import RPi.GPIO as GPIO
 
 import Adafruit_DHT
 
+import time
+
 from vendor.Adafruit_BMP085.Adafruit_BMP085 import BMP085
 
 import firebase_admin
@@ -43,9 +45,9 @@ class Iot(object):
         print(humidity)
         print(temperature)
         if temperature is not None:
-            self.send_to_firestore('temperature', round(temperature, 2))
+            self.send_to_firestoreTimeBasedNew('temperature', round(temperature, 2))
         if humidity is not None:
-            self.send_to_firestore('humidity', round(humidity, 2))
+            self.send_to_firestoreTimeBasedNew('humidity', round(humidity, 2))
 
     def pressure_sensor(self):
         """This method gets the pressure value
@@ -58,7 +60,7 @@ class Iot(object):
         pressure = self.bmp.readPressure()
         print(pressure)
         if pressure is not None:
-            self.send_to_firestore('pressure', int(round(pressure / 100.0, 2)))
+            self.send_to_firestoreTimeBasedNew('pressure', int(round(pressure / 100.0, 2)))
 
     def send_to_firestore(self, collection, value):
         """This method sends the values
@@ -81,6 +83,28 @@ class Iot(object):
         except Exception as exception:
             print(str(exception))
 
+	
+    def send_to_firestoreTimeBasedNew(self, collection, value):
+        """This method sends the values
+           to the Firebase Firestore collection.
+
+           Args:
+                self (Context): Context reference.
+                collection (String): Firestore collection name.
+                value (int): sensor value to be stored, here the value key will be based on the current timestamp
+        """
+
+        doc_ref = self.database.collection(collection).stream()
+
+        try:
+            for doc in doc_ref:
+                item = self.database.collection(collection).document(doc.id)
+                item.set({
+                    str(round(time.time(),0)): value
+                }, merge=True)
+        except Exception as exception:
+            print(str(exception))
+			
     def run(self):
         """This method runs the sensors and collects data.
 
