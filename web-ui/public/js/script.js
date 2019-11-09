@@ -41,12 +41,12 @@ function htmlUpdate(id, message) {
  */
 function checkQuality(sensor) {
     var db = firebase.firestore();
-    let tem;
-    let hum;
-    let MaxTem; 
-    let MinTem;
-    let MaxHum; 
-    let MinHum;
+    var tem;
+    var hum;
+    var MaxTem; 
+    var MinTem;
+    var MaxHum; 
+    var MinHum;
 	
 	db.collection("temperature")
         .onSnapshot(function (querySnapshot) {
