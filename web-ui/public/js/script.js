@@ -28,6 +28,8 @@ function readData(sensor) {
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 var dateTime = date + ' ' + time;
                 document.getElementById("last-update").innerText = dateTime;
+				checkQuality("people");
+				checkQuality("computer");
             });
         });
 }
@@ -48,8 +50,6 @@ function writeData(sensor) {
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 var dateTime = date + ' ' + time;
                 document.getElementById("last-update").innerText = dateTime;
-				checkQuality("people");
-				checkQuality("computer");
             });
         });
 }
