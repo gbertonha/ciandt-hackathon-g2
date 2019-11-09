@@ -66,13 +66,13 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 		    if (sensor=="people") {
-			MaxTem = doc.data().maxTem;
-			MinTem = doc.data().minTem;
+			MaxTem = doc.data().maxTemp;
+			MinTem = doc.data().minTemp;
 			MaxHum = doc.data().maxHum;
 			MinHum = doc.data().minHum;
 		    } else if (sensor=="computer") {
-			MaxTem = doc.data().maxTem;
-			MinTem = doc.data().minTem;
+			MaxTem = doc.data().maxTemp;
+			MinTem = doc.data().minTemp;
 			MaxHum = doc.data().maxHum;
 			MinHum = doc.data().minHum;
 	            }
