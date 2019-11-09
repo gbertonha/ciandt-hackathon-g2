@@ -105,7 +105,7 @@ function checkQuality(sensor) {
  */
 document.addEventListener('DOMContentLoaded', function () {
     try {
-        var sensors = ["temperature", "humidity", "pressure","people","computer"];
+        var sensors = ["temperature", "humidity", "people","computer"];
         sensors.forEach(function (sensor) {
             if (sensor == "people" || sensor == "computer"){
 		    checkQuality(sensor);
