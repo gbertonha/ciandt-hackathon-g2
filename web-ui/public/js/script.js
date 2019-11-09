@@ -4,10 +4,14 @@
 
 var tem;
 var hum;
-var MaxTem; 
-var MinTem;
-var MaxHum; 
-var MinHum;
+var pMaxTem; 
+var pMinTem;
+var pMaxHum; 
+var pMinHum;
+var cMaxTem; 
+var cMinTem;
+var cMaxHum; 
+var cMinHum;
 /**
  * Reads data from Firestore and updates information
  * displayed on the dashboard
@@ -39,6 +43,26 @@ function htmlUpdate(id, message) {
 }
 
 
+function conditions(vsensor,vtem,vhum,Maxvtem,Minvtem,Maxvhum,Minvhum) {
+	if (vtem!=null && vhum!=null && Maxvtem!=null && Minvtem!=null && Maxvhum!=null && Minvhum!=null) {
+		if (vtem>Maxvtem) {
+			htmlUpdate(vsensor + "_temp","Bad!");
+		} else if (vtem<Minvtem) {
+			htmlUpdate(vsensor + "_temp","Bad!");
+		} else {
+			htmlUpdate(vsensor + "_temp","Good!");
+		}
+		if (vhum>Maxvhum) {
+			htmlUpdate(vsensor + "_hum","Bad!");
+		} else if (vhum<Minvhum) {
+			htmlUpdate(vsensor + "_hum","Bad!");
+		} else {
+			htmlUpdate(vsensor + "_hum","Good!");
+		}
+
+	}
+}
+
 
 /**
  * Reads data from Firestore and updates information
@@ -52,23 +76,8 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 				tem = doc.data().value;
-			if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-				if (tem>MaxTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else if (tem<MinTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else {
-					htmlUpdate(sensor + "_temp","Good!");
-				}
-				if (hum>MaxHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else if (hum<MinHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else {
-					htmlUpdate(sensor + "_hum","Good!");
-				}
-		    
-			}
+			conditions("people",tem,hum,pMaxTem,pMinTem,pMaxHum,pMinHum);
+			conditions("computer",tem,hum,cMaxTem,cMinTem,cMaxHum,cMinHum);
 			});
         });
 
@@ -76,23 +85,8 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 				hum = doc.data().value;
-			if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-				if (tem>MaxTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else if (tem<MinTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else {
-					htmlUpdate(sensor + "_temp","Good!");
-				}
-				if (hum>MaxHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else if (hum<MinHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else {
-					htmlUpdate(sensor + "_hum","Good!");
-				}
-		    
-			}
+			conditions("people",tem,hum,pMaxTem,pMinTem,pMaxHum,pMinHum);
+			conditions("computer",tem,hum,cMaxTem,cMinTem,cMaxHum,cMinHum);			
 			});
         });
 	
@@ -100,33 +94,18 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 		    if (sensor=="people") {
-			MaxTem = doc.data().maxTemp;
-			MinTem = doc.data().minTemp;
-			MaxHum = doc.data().maxHum;
-			MinHum = doc.data().minHum;
+			pMaxTem = doc.data().maxTemp;
+			pMinTem = doc.data().minTemp;
+			pMaxHum = doc.data().maxHum;
+			pMinHum = doc.data().minHum;
 		    } else if (sensor=="computer") {
-			MaxTem = doc.data().maxTemp;
-			MinTem = doc.data().minTemp;
-			MaxHum = doc.data().maxHum;
-			MinHum = doc.data().minHum;
+			cMaxTem = doc.data().maxTemp;
+			cMinTem = doc.data().minTemp;
+			cMaxHum = doc.data().maxHum;
+			cMinHum = doc.data().minHum;
 	            }
-			if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-				if (tem>MaxTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else if (tem<MinTem) {
-					htmlUpdate(sensor + "_temp","Bad!");
-				} else {
-					htmlUpdate(sensor + "_temp","Good!");
-				}
-				if (hum>MaxHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else if (hum<MinHum) {
-					htmlUpdate(sensor + "_hum","Bad!");
-				} else {
-					htmlUpdate(sensor + "_hum","Good!");
-				}
-		    
-			}
+			conditions("people",tem,hum,pMaxTem,pMinTem,pMaxHum,pMinHum);
+			conditions("computer",tem,hum,cMaxTem,cMinTem,cMaxHum,cMinHum);
             });
         });
     
