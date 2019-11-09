@@ -50,14 +50,14 @@ function conditions(vsensor,vtem,vhum,Maxvtem,Minvtem,Maxvhum,Minvhum) {
 		} else if (vtem<Minvtem) {
 			htmlUpdate(vsensor + "_temp","Bad!", "red");
 		} else {
-			htmlUpdate(vsensor + "_temp","Good!", "green");
+			htmlUpdate(vsensor + "_temp","Good!", "#b5e7a0");
 		}
 		if (vhum>Maxvhum) {
 			htmlUpdate(vsensor + "_hum","Bad!", "red");
 		} else if (vhum<Minvhum) {
 			htmlUpdate(vsensor + "_hum","Bad!", "red");
 		} else {
-			htmlUpdate(vsensor + "_hum","Good!", "green");
+			htmlUpdate(vsensor + "_hum","Good!", "#b5e7a0");
 		}
 
 	}
