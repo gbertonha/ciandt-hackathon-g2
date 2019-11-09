@@ -52,15 +52,15 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 				tem = doc.data().value;
-			}
-		}
+			});
+        });
 
 	db.collection("humidity")
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 				hum = doc.data().value;
-			}
-		}
+			});
+        });
 	
     db.collection(sensor)
         .onSnapshot(function (querySnapshot) {
