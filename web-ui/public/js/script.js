@@ -17,9 +17,9 @@ function readData(sensor) {
     db.collection(sensor)
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-				if(sensor == "temperature" && tem != null){
+				if(sensor == "temperature"){
 					tem = doc.data().value;
-				}else if(sensor == "humidity" && hum != null){
+				}else if(sensor == "humidity"){
 					hum = doc.data().value;
 				}
                 document.getElementById(sensor).innerText = doc.data().value;
