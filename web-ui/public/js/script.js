@@ -70,6 +70,7 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 				tem = doc.data().value;
+				checkCondtions(sensor);
 			});
         });
 
@@ -77,6 +78,7 @@ function checkQuality(sensor) {
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
 				hum = doc.data().value;
+				checkCondtions(sensor);
 			});
         });
 	
