@@ -2,6 +2,12 @@
 /*jslint browser:true */
 "use strict";
 
+var tem;
+var hum;
+var MaxTem; 
+var MinTem;
+var MaxHum; 
+var MinHum;
 /**
  * Reads data from Firestore and updates information
  * displayed on the dashboard
@@ -41,12 +47,6 @@ function htmlUpdate(id, message) {
  */
 function checkQuality(sensor) {
     var db = firebase.firestore();
-    var tem;
-    var hum;
-    var MaxTem; 
-    var MinTem;
-    var MaxHum; 
-    var MinHum;
 	
 	db.collection("temperature")
         .onSnapshot(function (querySnapshot) {
