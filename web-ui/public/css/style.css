@@ -148,3 +148,27 @@ header h2 {
   padding: 0px;
   font-size: 20px;
 }
+
+.titletab {
+  color: rgb(241, 255, 233);
+  font-family: 'Open Sans';
+  margin: 0px 0px 0px 15px;
+  padding: 0px;
+  font-size: 25px;
+}
+
+.leftcolumn {
+  color: rgb(200, 200, 50);
+  font-family: 'Open Sans';
+  margin: 0px 0px 0px 15px;
+  padding: 0px;
+  font-size: 25px;
+}
+
+.message {
+  color: rgb(50, 200, 50);
+  font-family: 'Open Sans';
+  margin: 0px 0px 0px 15px;
+  padding: 0px;
+  font-size: 25px;
+}
