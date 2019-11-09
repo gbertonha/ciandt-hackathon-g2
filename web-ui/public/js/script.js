@@ -76,25 +76,26 @@ function checkQuality(sensor) {
 			MaxHum = doc.data().maxHum;
 			MinHum = doc.data().minHum;
 	            }
+			if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
+				if (tem>MaxTem) {
+					htmlUpdate(sensor + "_temp","Bad!");
+				} else if (tem<MinTem) {
+					htmlUpdate(sensor + "_temp","Bad!");
+				} else {
+					htmlUpdate(sensor + "_temp","Good!");
+				}
+				if (hum>MaxHum) {
+					htmlUpdate(sensor + "_hum","Bad!");
+				} else if (hum<MinHum) {
+					htmlUpdate(sensor + "_hum","Bad!");
+				} else {
+					htmlUpdate(sensor + "_hum","Good!");
+				}
+		    
+			}
             });
         });
-    if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-	    if (tem>MaxTem) {
-			    htmlUpdate(sensor + "_temp","Bad!");
-		    } else if (tem<MinTem) {
-			    htmlUpdate(sensor + "_temp","Bad!");
-		    } else {
-			    htmlUpdate(sensor + "_temp","Good!");
-		    }
-		    if (hum>MaxHum) {
-			    htmlUpdate(sensor + "_hum","Bad!");
-		    } else if (hum<MinHum) {
-			    htmlUpdate(sensor + "_hum","Bad!");
-		    } else {
-			    htmlUpdate(sensor + "_hum","Good!");
-		    }
-		    
-    }
+    
 
 }
 
