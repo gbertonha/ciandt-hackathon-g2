@@ -17,6 +17,11 @@ function readData(sensor) {
     db.collection(sensor)
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
+				if(sensor == "temperature"){
+					temp = doc.data().value;
+				}else if(sensor == "humidity"){
+					hum = doc.data().value;
+				}
                 document.getElementById(sensor).innerText = doc.data().value;
                 var today = new Date();
                 var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -43,6 +48,8 @@ function writeData(sensor) {
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 var dateTime = date + ' ' + time;
                 document.getElementById("last-update").innerText = dateTime;
+				checkQuality("people");
+				checkQuality("computer");
             });
         });
 }
@@ -65,22 +72,6 @@ function htmlUpdate(id, message) {
  */
 function checkQuality(sensor) {
     var db = firebase.firestore();
-	
-	db.collection("temperature")
-        .onSnapshot(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-				tem = doc.data().value;
-				checkCondtions(sensor);
-			});
-        });
-
-	db.collection("humidity")
-        .onSnapshot(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-				hum = doc.data().value;
-				checkCondtions(sensor);
-			});
-        });
 	
     db.collection(sensor)
         .onSnapshot(function (querySnapshot) {
