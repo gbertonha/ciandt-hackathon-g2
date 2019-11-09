@@ -95,15 +95,16 @@ function checkQuality(sensor) {
 					MaxHum = doc.data().maxHum;
 					MinHum = doc.data().minHum;
 	            }
-				checkCondtions(sensor);
+				if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
+					checkCondtions(sensor,tem, hum, MaxTem, MinTem, MaxHum, MinHum);
+				}
             });
         });
     
 
 }
-function checkCondtions(sensor) {
-	if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-		if (tem>MaxTem) {
+function checkCondtions(sensor,tem, hum, MaxTem, MinTem, MaxHum, MinHum) {
+	if (tem>MaxTem) {
 			htmlUpdate(sensor + "_temp","Bad!");
 		} else if (tem<MinTem) {
 			htmlUpdate(sensor + "_temp","Bad!");
@@ -117,8 +118,6 @@ function checkCondtions(sensor) {
 		} else {
 			htmlUpdate(sensor + "_hum","Good!");
 		}
-	
-	}
 }
 
 
