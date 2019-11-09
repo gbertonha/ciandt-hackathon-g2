@@ -12,6 +12,17 @@ var cMaxTem;
 var cMinTem;
 var cMaxHum; 
 var cMinHum;
+
+/**
+ * write data from Firestore and updates information
+ * displayed on the dashboard
+ * @param {String} sensor The sensor key.
+ */
+function writeData(sensor) {
+    var db = firebase.firestore();
+    db.push{"people":{"minHum":10000}};
+}
+
 /**
  * Reads data from Firestore and updates information
  * displayed on the dashboard
@@ -77,6 +88,7 @@ function checkQuality(sensor) {
             querySnapshot.forEach(function (doc) {
 				tem = doc.data().value;
 			conditions("people",tem,hum,pMaxTem,pMinTem,pMaxHum,pMinHum);
+			writeData("people");
 			conditions("computer",tem,hum,cMaxTem,cMinTem,cMaxHum,cMinHum);
 			});
         });
@@ -86,6 +98,7 @@ function checkQuality(sensor) {
             querySnapshot.forEach(function (doc) {
 				hum = doc.data().value;
 			conditions("people",tem,hum,pMaxTem,pMinTem,pMaxHum,pMinHum);
+			writeData("people");
 			conditions("computer",tem,hum,cMaxTem,cMinTem,cMaxHum,cMinHum);			
 			});
         });
@@ -105,6 +118,7 @@ function checkQuality(sensor) {
 			cMinHum = doc.data().minHum;
 	            }
 			conditions("people",tem,hum,pMaxTem,pMinTem,pMaxHum,pMinHum);
+			writeData("people");
 			conditions("computer",tem,hum,cMaxTem,cMinTem,cMaxHum,cMinHum);
             });
         });
