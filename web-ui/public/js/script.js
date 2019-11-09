@@ -23,20 +23,13 @@ function readData(sensor) {
 }
 
 /**
- * Reads data from Firestore and updates information
+ * write from Firestore
  * displayed on the dashboard
  * @param {String} sensor The sensor key.
  */
-function htmlUpdate() {
-            function (doc) {
-                document.getElementById().innerText = doc.data().value;
-                var today = new Date();
-                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                var dateTime = date + ' ' + time;
-                document.getElementById("last-update").innerText = dateTime;
-            });
-        });
+function htmlUpdate(id, message) {
+			
+            document.getElementById(id).innerText = message;
 }
 
 
@@ -46,7 +39,7 @@ function htmlUpdate() {
  * displayed on the dashboard
  * @param {String} sensor The sensor key.
  */
-function checkQuality(sensor, temp, hum) {
+function checkQuality(sensor) {
     var db = firebase.firestore();
     let tem;
     let hum;
@@ -54,14 +47,25 @@ function checkQuality(sensor, temp, hum) {
     let MinTem;
     let MaxHum; 
     let MinHum;
+	
+	db.collection("temperature")
+        .onSnapshot(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+				tem = doc.data().value;
+			}
+		}
+
+	db.collection("humidity")
+        .onSnapshot(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+				hum = doc.data().value;
+			}
+		}
+	
     db.collection(sensor)
         .onSnapshot(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-		    if (sensor=="temperature") {
-		    	tem = doc.data().value;
-	            } else if (sensor=="humidity") {
-			hum = doc.data().value;
-	            } else if (sensor=="people") {
+		    if (sensor=="people") {
 			MaxTem = doc.data().maxTem;
 			MinTem = doc.data().minTem;
 			MaxHum = doc.data().maxHum;
@@ -75,31 +79,21 @@ function checkQuality(sensor, temp, hum) {
             });
         });
     if (tem!=null && hum!=null && MaxTem!=null && MinTem!=null && MaxHum!=null && MinHum!=null) {
-	    if (sensor=="people") {
-		    if (tem>MaxTem) {
-			    // Not OK
+	    if (tem>MaxTem) {
+			    htmlUpdate(sensor + "_temp","Bad!");
 		    } else if (tem<MinTem) {
-			    // Not OK
+			    htmlUpdate(sensor + "_temp","Bad!");
 		    } else {
-			    // Ok
+			    htmlUpdate(sensor + "_temp","Good!");
 		    }
 		    if (hum>MaxHum) {
-			    // Not OK
+			    htmlUpdate(sensor + "_hum","Bad!");
 		    } else if (hum<MinHum) {
-			    // Not Ok
+			    htmlUpdate(sensor + "_hum","Bad!");
 		    } else {
-			    // OK
+			    htmlUpdate(sensor + "_hum","Good!");
 		    }
-	    } else if (sensor=="computer") {
-            	    if (tem>MaxTem) {
-		    } else if (tem<MinTem) {
-		    } else {
-		    }
-		    if (hum>MaxHum) {
-		    } else if (hum<MinHum) {
-		    } else {
-		    }
-	    }
+		    
     }
 
 }
@@ -114,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var sensors = ["temperature", "humidity", "pressure","people","computer"];
         sensors.forEach(function (sensor) {
             if (sensor == "people" || sensor == "computer"){
-		    checkQuality(sensor, "temperature", "humidity"):
+		    checkQuality(sensor):
 	    }
 		else {
 		    readData(sensor);
